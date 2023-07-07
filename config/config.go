@@ -41,5 +41,11 @@ func New() *Config {
 			Port:        os.Getenv("APP_PORT"),
 			Environment: os.Getenv("APP_ENV"),
 		},
+		Database: DatabaseConfig{
+			User: os.Getenv("DB_USER"),
+			Pass: os.Getenv("DB_PASS"),
+			Host: os.Getenv("DB_HOST"),
+			Name: os.Getenv("DB_NAME"),
+		},
 	}
 }
