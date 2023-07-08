@@ -1,0 +1,19 @@
+up:
+	docker-compose up -d
+
+down:
+	docker-compose down
+
+createdb:
+	docker exec -it go-starter-db-1 createdb --username=postgres --owner=postgres go-starter
+
+dropdb:
+	docker exec -it go-starter-db-1 dropdb --username=postgres -W go-starter
+
+migrateup:
+	migrate -path database/migrations -database "postgresql://postgres:password@localhost:5432/go-starter?sslmode=disable" -verbose up
+
+migratedown:
+	migrate -path database/migrations -database "postgresql://postgres:password@localhost:5432/go-starter?sslmode=disable" -verbose down
+
+.PHONY: createdb dropdb up down migrateup migratedown
