@@ -16,4 +16,10 @@ migrateup:
 migratedown:
 	migrate -path database/migrations -database "postgresql://postgres:password@localhost:5432/go-starter?sslmode=disable" -verbose down
 
-.PHONY: createdb dropdb up down migrateup migratedown
+sqlc:
+	sqlc generate
+
+test:
+	go test -v -cover ./...
+
+.PHONY: createdb dropdb up down migrateup migratedown sqlc test
