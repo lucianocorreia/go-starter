@@ -5,14 +5,14 @@ import (
 	"log"
 
 	"github.com/lucianocorreia/go-starter/config"
+
+	_ "github.com/lib/pq"
 )
 
 func main() {
-	cfg := config.New()
+	app := config.NewApp()
 
-	fmt.Println(cfg)
-
-	fmt.Println("Hello, World!!!!!")
+	fmt.Println(app)
 
 	log.Println("Starting the application...")
 }
