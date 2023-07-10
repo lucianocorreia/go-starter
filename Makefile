@@ -1,8 +1,8 @@
 up:
-	docker-compose up -d
+	docker compose up -d
 
 down:
-	docker-compose down
+	docker compose down
 
 createdb:
 	docker exec -it go-starter-db-1 createdb --username=postgres --owner=postgres go-starter

@@ -19,6 +19,8 @@ type (
 		Name string
 		Port string
 
+		SecretKey string
+
 		Environment string
 	}
 
@@ -41,6 +43,7 @@ func NewConfig() Config {
 		App: AppConfig{
 			Name:        os.Getenv("APP_NAME"),
 			Port:        os.Getenv("APP_PORT"),
+			SecretKey:   os.Getenv("APP_SECRET_KEY"),
 			Environment: os.Getenv("APP_ENV"),
 		},
 		Database: DatabaseConfig{
