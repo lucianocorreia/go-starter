@@ -1,7 +1,7 @@
 package database
 
 import (
-	"database/sql"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 // Store provides all functions to execute db queries and transactions
@@ -12,14 +12,14 @@ type Store interface {
 // SQLStore provides all functions to execute SQL queries and transactions
 type SQLStore struct {
 	*Queries
-	db *sql.DB
+	connPool *pgxpool.Pool
 }
 
 // NewStore creates a new store
-func NewStore(db *sql.DB) Store {
+func NewStore(pool *pgxpool.Pool) Store {
 	return SQLStore{
-		Queries: New(db),
-		db:      db,
+		Queries:  New(pool),
+		connPool: pool,
 	}
 }
 

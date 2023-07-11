@@ -2,11 +2,11 @@ package database
 
 import (
 	"context"
-	"database/sql"
 	"testing"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/lucianocorreia/go-starter/utils"
 	"github.com/stretchr/testify/require"
 )
@@ -40,7 +40,7 @@ func createRandomUser(t *testing.T) *User {
 		Name:           utils.RandomOwner(),
 		Email:          utils.RandomEmail(),
 		IsActive:       false,
-		TenantID:       sql.NullString{String: uuid.NewString(), Valid: true},
+		TenantID:       pgtype.Text{String: uuid.NewString(), Valid: true},
 	}
 
 	user, err := testQueries.CreateUser(context.Background(), params)

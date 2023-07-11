@@ -1,12 +1,13 @@
 package main
 
 import (
-	"database/sql"
+	"context"
 	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/lucianocorreia/go-starter/config"
 	database "github.com/lucianocorreia/go-starter/database/sqlc"
 	"github.com/lucianocorreia/go-starter/handlers"
@@ -32,12 +33,12 @@ func NewApp() *App {
 	infoLog := log.New(log.Writer(), "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(log.Writer(), "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
-	conn, err := sql.Open(cfg.GetDBDriver(), cfg.GetDBSource())
+	connPool, err := pgxpool.New(context.Background(), cfg.GetDBSource())
 	if err != nil {
 		errorLog.Fatal("cannot connect to db:", err)
 	}
 
-	store := database.NewStore(conn)
+	store := database.NewStore(connPool)
 	handlers := handlers.NewHandlers(store)
 
 	return &App{

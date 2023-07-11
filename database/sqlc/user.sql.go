@@ -7,7 +7,8 @@ package database
 
 import (
 	"context"
-	"database/sql"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createUser = `-- name: CreateUser :one
@@ -24,16 +25,16 @@ RETURNING id, created_at, updated_at, username, hashed_password, name, email, pa
 `
 
 type CreateUserParams struct {
-	Username       string         `json:"username"`
-	HashedPassword string         `json:"hashed_password"`
-	Name           string         `json:"name"`
-	Email          string         `json:"email"`
-	IsActive       bool           `json:"is_active"`
-	TenantID       sql.NullString `json:"tenant_id"`
+	Username       string      `json:"username"`
+	HashedPassword string      `json:"hashed_password"`
+	Name           string      `json:"name"`
+	Email          string      `json:"email"`
+	IsActive       bool        `json:"is_active"`
+	TenantID       pgtype.Text `json:"tenant_id"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg *CreateUserParams) (*User, error) {
-	row := q.db.QueryRowContext(ctx, createUser,
+	row := q.db.QueryRow(ctx, createUser,
 		arg.Username,
 		arg.HashedPassword,
 		arg.Name,
@@ -65,7 +66,7 @@ LIMIT 1
 `
 
 func (q *Queries) GetUser(ctx context.Context, email string) (*User, error) {
-	row := q.db.QueryRowContext(ctx, getUser, email)
+	row := q.db.QueryRow(ctx, getUser, email)
 	var i User
 	err := row.Scan(
 		&i.ID,
@@ -96,7 +97,7 @@ type ListUsersParams struct {
 }
 
 func (q *Queries) ListUsers(ctx context.Context, arg *ListUsersParams) ([]*User, error) {
-	rows, err := q.db.QueryContext(ctx, listUsers, arg.Limit, arg.Offset)
+	rows, err := q.db.Query(ctx, listUsers, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
@@ -119,9 +120,6 @@ func (q *Queries) ListUsers(ctx context.Context, arg *ListUsersParams) ([]*User,
 			return nil, err
 		}
 		items = append(items, &i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
