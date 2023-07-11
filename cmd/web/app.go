@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
@@ -11,6 +12,7 @@ import (
 	"github.com/lucianocorreia/go-starter/config"
 	database "github.com/lucianocorreia/go-starter/database/sqlc"
 	"github.com/lucianocorreia/go-starter/handlers"
+	"github.com/lucianocorreia/go-starter/views"
 )
 
 const (
@@ -51,7 +53,7 @@ func NewApp() *App {
 }
 
 func (a *App) Run() error {
-	engine := html.New("./views", ".gohtml")
+	engine := html.NewFileSystem(http.FS(views.ViewsFS), ".gohtml")
 
 	server := fiber.New(
 		fiber.Config{
