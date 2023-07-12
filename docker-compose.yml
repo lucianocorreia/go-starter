@@ -1,15 +1,15 @@
 version: "3.8"
 
 services:
-  web:
-    build: .
-    env_file:
-      - .env
-    ports:
-      - "${APP_PORT}:${APP_PORT}"
-    volumes:
-      - .:/usr/src/app
-    command: air ./cmd/web -b 0.0.0.0
+  # web:
+  #   build: .
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "${APP_PORT}:${APP_PORT}"
+  #   volumes:
+  #     - .:/usr/src/app
+  #   command: air ./cmd/web -b 0.0.0.0
   # cache:
   #   image: "redis:alpine"
   #   container_name: pagoda_cache

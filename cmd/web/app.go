@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/template/html/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/lucianocorreia/go-starter/config"
@@ -61,6 +62,13 @@ func (a *App) Run() error {
 			ViewsLayout: "layouts/main",
 		},
 	)
+
+	if a.Config.App.Environment == "development" {
+
+		server.Use(logger.New(logger.Config{
+			Format: "[${ip}]:${port} ${status} - ${method} ${path}\n",
+		}))
+	}
 
 	a.setupRoutes(server)
 

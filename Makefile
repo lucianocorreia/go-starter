@@ -1,3 +1,6 @@
+run:
+	air ./cmd/web -b 0.0.0.0
+
 up:
 	docker compose up -d
 
@@ -22,4 +25,4 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: createdb dropdb up down migrateup migratedown sqlc test
+.PHONY: run createdb dropdb up down migrateup migratedown sqlc test
