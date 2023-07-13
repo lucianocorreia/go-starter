@@ -2,3 +2,5 @@
 # Just plain old shell command. You could use `make` as well.
 
 cmd = "go build -o ./tmp/main ./cmd/web"
+
+include_ext = ["go", "tpl", "tmpl", "html", "css", "js", "gohtml"]
