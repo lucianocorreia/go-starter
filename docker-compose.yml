@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  # web:
+  #   build: .
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "${APP_PORT}:${APP_PORT}"
+  #   volumes:
+  #     - .:/usr/src/app
+  #   command: air ./cmd/web -b 0.0.0.0
+  # cache:
+  #   image: "redis:alpine"
+  #   container_name: pagoda_cache
+  #   ports:
+  #     - "6379:6379"
+  db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+volumes:
+  postgres-db:
