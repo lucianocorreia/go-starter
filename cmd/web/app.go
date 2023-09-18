@@ -54,12 +54,13 @@ func NewApp() *App {
 }
 
 func (a *App) Run() error {
-	engine := html.NewFileSystem(http.FS(views.ViewsFS), ".gohtml")
+	engine := html.NewFileSystem(http.FS(views.ViewsFS), ".tmpl")
 
 	server := fiber.New(
 		fiber.Config{
-			Views:       engine,
-			ViewsLayout: "layouts/main",
+			Views:             engine,
+			PassLocalsToViews: true,
+			ViewsLayout:       "layouts/main",
 		},
 	)
 

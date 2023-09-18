@@ -17,6 +17,7 @@ func NewHandlers(store database.Store) *Handlers {
 	}
 }
 
+// RenderPage renders a page
 func (h *Handlers) RenderPage(c *fiber.Ctx, page string, title string, layouts ...string) error {
 	return c.Render(page, fiber.Map{"Title": title}, layouts...)
 }
