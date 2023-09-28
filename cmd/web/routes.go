@@ -7,4 +7,5 @@ func (a *App) setupRoutes(app *fiber.App) {
 
 	// auth routes
 	app.Get("/register", a.Handlers.Register)
+	app.Post("/register", a.Handlers.RegisterPost)
 }

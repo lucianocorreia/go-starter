@@ -7,7 +7,9 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/csrf"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/gofiber/template/html/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/lucianocorreia/go-starter/config"
@@ -41,8 +43,10 @@ func NewApp() *App {
 		errorLog.Fatal("cannot connect to db:", err)
 	}
 
+	// Handlers
 	store := database.NewStore(connPool)
-	handlers := handlers.NewHandlers(store)
+	session := session.New()
+	handlers := handlers.NewHandlers(store, session)
 
 	return &App{
 		Config:   cfg,
@@ -64,8 +68,10 @@ func (a *App) Run() error {
 		},
 	)
 
-	if a.Config.App.Environment == "development" {
+	// middleware
+	server.Use(csrf.New())
 
+	if a.Config.App.Environment == "development" {
 		server.Use(logger.New(logger.Config{
 			Format: "[${ip}]:${port} ${status} - ${method} ${path}\n",
 		}))

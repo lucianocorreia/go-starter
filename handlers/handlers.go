@@ -2,18 +2,21 @@ package handlers
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	database "github.com/lucianocorreia/go-starter/database/sqlc"
 )
 
 // Handlers is the application handlers struct
 type Handlers struct {
-	store database.Store
+	store   database.Store
+	session *session.Store
 }
 
 // NewHandlers returns a new Handlers struct
-func NewHandlers(store database.Store) *Handlers {
+func NewHandlers(store database.Store, session *session.Store) *Handlers {
 	return &Handlers{
-		store: store,
+		store:   store,
+		session: session,
 	}
 }
 
