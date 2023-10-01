@@ -3,15 +3,15 @@ version: "3"
 services:
   cache:
     image: "redis:alpine"
-    container_name: pagoda_cache
+    container_name: gostrater_cache
     ports:
       - "127.0.0.1:6379:6379"
   db:
     image: postgres:16-alpine
-    container_name: pagoda_db
+    container_name: gostarter_db
     ports:
       - "127.0.0.1:5432:5432"
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=gostarter_db
