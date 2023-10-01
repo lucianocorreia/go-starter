@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/csrf"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/gofiber/template/html/v2"
@@ -69,7 +68,7 @@ func (a *App) Run() error {
 	)
 
 	// middleware
-	server.Use(csrf.New())
+	// server.Use(csrf.New())
 
 	if a.Config.App.Environment == "development" {
 		server.Use(logger.New(logger.Config{

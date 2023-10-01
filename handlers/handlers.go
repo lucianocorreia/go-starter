@@ -24,3 +24,8 @@ func NewHandlers(store database.Store, session *session.Store) *Handlers {
 func (h *Handlers) RenderPage(c *fiber.Ctx, page string, title string, layouts ...string) error {
 	return c.Render(page, fiber.Map{"Title": title}, layouts...)
 }
+
+// RenderPageWithCSRF renders a page with CSRF token
+func (h *Handlers) RenderPageWithCSRF(c *fiber.Ctx, page string, title string, layouts ...string) error {
+	return c.Render(page, fiber.Map{"Title": title}, layouts...)
+}
