@@ -5,8 +5,10 @@ import (
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
+	"github.com/labstack/echo/v4"
 	echomw "github.com/labstack/echo/v4/middleware"
 	"github.com/lucianocorreia/go-starter/config"
+	"github.com/lucianocorreia/go-starter/pkg/handlers"
 	"github.com/lucianocorreia/go-starter/pkg/middleware"
 	"github.com/lucianocorreia/go-starter/pkg/services"
 )
@@ -44,4 +46,18 @@ func BuildRouter(c *services.Container) {
 		}),
 	)
 
+	// base handler
+	hnd := handlers.NewHandler(c)
+	// Error handler
+	err := errorHandler{Handler: hnd}
+	c.Web.HTTPErrorHandler = err.Get
+
+	// Example routes
+	navRoutes(c, g, hnd)
+	// userRoutes(c, g, ctr)
+}
+
+func navRoutes(c *services.Container, g *echo.Group, hnd handlers.Handler) {
+	home := home{Handler: hnd}
+	g.GET("/", home.Get).Name = "home"
 }

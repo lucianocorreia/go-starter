@@ -15,6 +15,9 @@ type Container struct {
 
 	// Web is the web server
 	Web *echo.Echo
+
+	// TemplateRenderer stores a service to easily render and cache templates
+	TemplateRenderer *TemplateRenderer
 }
 
 // NewContainer creates a new container
@@ -24,6 +27,8 @@ func NewContainer() *Container {
 	c.initConfig()
 
 	c.initWeb()
+
+	c.initTemplateRenderer()
 
 	return c
 }
@@ -52,4 +57,9 @@ func (c *Container) initWeb() {
 	}
 
 	// c.Web.Validator = c.Validator
+}
+
+// initTemplateRenderer initializes the template renderer
+func (c *Container) initTemplateRenderer() {
+	c.TemplateRenderer = NewTemplateRenderer(c.Config)
 }
