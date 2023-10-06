@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" style="height:100%;">
+<head>
+    {{template "metatags" .}}
+    {{template "css" .}}
+    {{template "js" .}}
+</head>
+ <body class="has-background-light" style="min-height:100%;">
+        <nav class="navbar is-dark">
+            <div class="container">
+                <div class="navbar-brand" hx-boost="true">
+                    <a href="{{call .ToURL "home"}}" class="navbar-item">{{.AppName}}</a>
+                </div>
+                <div id="navbarMenu" class="navbar-menu">
+                    <div class="navbar-end">
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-5">
+            <div class="columns">
+                <div class="column is-2">
+                    <aside class="menu" hx-boost="true">
+                        <p class="menu-label">General</p>
+                        <ul class="menu-list">
+                            <li>{{link (call .ToURL "home") "Dashboard" .Path}}</li>
+                        </ul>
+
+                    </aside>
+                </div>
+
+                <div class="column is-10">
+                    <div class="box">
+                        {{- if .Title}}
+                            <h1 class="title">{{.Title}}</h1>
+                        {{- end}}
+
+                        {{template "messages" .}}
+                        {{template "content" .}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

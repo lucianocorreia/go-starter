@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/labstack/echo/v4"
-	"github.com/lucianocorreia/go-starter/tests"
+	"github.com/lucianocorreia/go-starter/pkg/tests"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
