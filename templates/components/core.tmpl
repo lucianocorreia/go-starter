@@ -20,3 +20,23 @@
     <script src="https://unpkg.com/htmx.org@1.6.1"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 {{end}}
+
+{{define "footer"}}
+    {{- if .CSRF}}
+        <script>
+            document.body.addEventListener('htmx:configRequest', function(evt)  {
+                if (evt.detail.verb !== "get") {
+                    evt.detail.parameters['csrf'] = '{{.CSRF}}';
+                }
+            })
+        </script>
+    {{end}}
+    <script>
+        document.body.addEventListener('htmx:beforeSwap', function(evt) {
+            if (evt.detail.xhr.status >= 400){
+                evt.detail.shouldSwap = true;
+                evt.detail.target = htmx.find("body");
+            }
+        });
+    </script>
+{{end}}

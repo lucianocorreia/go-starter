@@ -13,7 +13,7 @@ app:
   name: "Go Starter"
   environment: "local"
   # Change this on any live environments
-  encryptionKey: "?E(G+KbPeShVmYq3t6w9z$C&F)J@McQf"
+  encryptionKey: "sessionsecret"
   timeout: "20s"
   passwordToken:
       expiration: "60m"

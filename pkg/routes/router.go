@@ -54,10 +54,17 @@ func BuildRouter(c *services.Container) {
 
 	// Example routes
 	navRoutes(c, g, hnd)
-	// userRoutes(c, g, ctr)
+	authRoutes(c, g, hnd)
 }
 
 func navRoutes(c *services.Container, g *echo.Group, hnd handlers.Handler) {
 	home := home{Handler: hnd}
 	g.GET("/", home.Get).Name = "home"
+}
+
+func authRoutes(c *services.Container, g *echo.Group, hnd handlers.Handler) {
+	noAuth := g.Group("/user", middleware.RequireNoAuthentication())
+
+	register := register{Handler: hnd}
+	noAuth.GET("/register", register.Get).Name = "register"
 }
