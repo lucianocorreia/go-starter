@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	echomw "github.com/labstack/echo/v4/middleware"
+
 	"github.com/lucianocorreia/go-starter/pkg/flash"
 )
 
@@ -59,9 +61,9 @@ func NewPage(ctx echo.Context) Page {
 
 	p.IsHome = p.Path == "/"
 
-	// if csrf := ctx.Get(echomw.DefaultCSRFConfig.ContextKey); csrf != nil {
-	// 	p.CSRF = csrf.(string)
-	// }
+	if csrf := ctx.Get(echomw.DefaultCSRFConfig.ContextKey); csrf != nil {
+		p.CSRF = csrf.(string)
+	}
 
 	// if u := ctx.Get(context.AuthenticatedUserKey); u != nil {
 	// 	p.IsAuth = true

@@ -1,11 +1,21 @@
 {{define "content"}}
-    <form method="post" hx-boost="true" action="{{call .ToURL "register.post"}}">
-        <div class="field">
-            <label for="name" class="label">Name</label>
-            <div class="control">
-                <input type="text" id="name" name="name" class="input {{.Form.Submission.GetFieldStatusClass "Name"}}" value="{{.Form.Name}}">
-                {{template "field-errors" (.Form.Submission.GetFieldErrors "Name")}}
-            </div>
+<form method="post" hx-boost="true" action="{{call .ToURL " register.post"}}">
+    <div class="field">
+        <label for="name" class="label">Name</label>
+        <div class="control">
+            <input type="text" id="name" name="name" class="input {{.Form.Submission.GetFieldStatusClass " Name"}}"
+                value="{{.Form.Name}}">
+            {{template "field-errors" (.Form.Submission.GetFieldErrors "Name")}}
         </div>
-    </form>
+    </div>
+    <div class="field is-grouped">
+        <p class="control">
+            <button class="button is-primary">Register</button>
+        </p>
+        <p class="control">
+            <a href="{{call .ToURL " home"}}" class="button is-light">Cancel</a>
+        </p>
+    </div>
+    {{template "csrf" .}}
+</form>
 {{end}}
