@@ -10,11 +10,14 @@ import (
 
 // Container is the container for the services
 type Container struct {
-	// Config is the configuration
-	Config *config.Config
+	// Validator stores a validator
+	Validator *Validator
 
 	// Web is the web server
 	Web *echo.Echo
+
+	// Config is the configuration
+	Config *config.Config
 
 	// TemplateRenderer stores a service to easily render and cache templates
 	TemplateRenderer *TemplateRenderer
@@ -25,6 +28,7 @@ func NewContainer() *Container {
 	c := new(Container)
 
 	c.initConfig()
+	c.initValidator()
 
 	c.initWeb()
 
@@ -38,6 +42,7 @@ func (c *Container) Shutdown() error {
 	return nil
 }
 
+// initConfig initializes the configuration
 func (c *Container) initConfig() {
 	cfg, err := config.NewConfig()
 	if err != nil {
@@ -46,6 +51,12 @@ func (c *Container) initConfig() {
 	c.Config = &cfg
 }
 
+// initValidator initializes the validator
+func (c *Container) initValidator() {
+	c.Validator = NewValidator()
+}
+
+// initWeb initializes the web server
 func (c *Container) initWeb() {
 	c.Web = echo.New()
 
@@ -56,7 +67,7 @@ func (c *Container) initWeb() {
 		c.Web.Logger.SetLevel(log.DEBUG)
 	}
 
-	// c.Web.Validator = c.Validator
+	c.Web.Validator = c.Validator
 }
 
 // initTemplateRenderer initializes the template renderer

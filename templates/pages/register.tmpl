@@ -1,3 +1,11 @@
 {{define "content"}}
-<span>Register</span>
+    <form method="post" hx-boost="true" action="{{call .ToURL "register.post"}}">
+        <div class="field">
+            <label for="name" class="label">Name</label>
+            <div class="control">
+                <input type="text" id="name" name="name" class="input {{.Form.Submission.GetFieldStatusClass "Name"}}" value="{{.Form.Name}}">
+                {{template "field-errors" (.Form.Submission.GetFieldErrors "Name")}}
+            </div>
+        </div>
+    </form>
 {{end}}

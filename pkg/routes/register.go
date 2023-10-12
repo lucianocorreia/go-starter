@@ -12,7 +12,9 @@ type (
 	}
 
 	registerForm struct {
-		name string `form:"name" validate:"required"`
+		Name string `form:"name" validate:"required"`
+
+		Submission handlers.FormSubmission
 	}
 )
 
