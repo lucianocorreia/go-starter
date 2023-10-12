@@ -54,6 +54,11 @@ reset:
 run:
 	clear
 	go run cmd/web/main.go
+	
+.PHONY: air
+air:
+	@clear
+	@air ./cmd/web -b 0.0.0.0
 
 # Run all tests
 .PHONY: test
